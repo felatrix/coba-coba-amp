@@ -1,23 +1,31 @@
-import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+import fetch from 'isomorphic-unfetch';
+import Layout from '../components/layout';
+import Post from '../components/post';
+import categories from '../data/categories.json';
 
-export default function Home() {
+const Index = ({ posts }) => {
   return (
-    <div className="container">
-      <Head>
-        <title>Ganti</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
+      <div className="post-list">
+        {posts.map(post => (
+          <Post key={post.id} post={post} />
+        ))}
+      </div>
+    </Layout>
+  );
+};
 
-      <main>
-        <Header title="Welcome to my app!" />
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-      </main>
+Index.getInitialProps = async () => {
+  // fetch list of posts
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=1`);
+  const posts = await res.json();
+  // assign a random category
+  posts.map(post => {
+    return (post.category = categories[Math.floor(Math.random() * categories.length)]);
+  });
+  return { posts };
+};
 
-      <Footer />
-    </div>
-  )
-}
+export const config = { amp: true };
+
+export default Index;
