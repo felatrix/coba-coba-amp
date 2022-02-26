@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Header from '../components/header';
+import Footer from '../components/footer';
 
 const Layout = props => {
   return (
@@ -7,9 +9,11 @@ const Layout = props => {
         <title>{props.title ? `${props.title} | Next.js AMP Example` : 'Next.js AMP Example'}</title>
       </Head>
 
+      <Header />
 
       <div className="content-wrapper">{props.children}</div>
 
+      <Footer />
 
       <style jsx global>{`
         html {
