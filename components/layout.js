@@ -1,6 +1,5 @@
 import Head from 'next/head';
-import Header from '../components/header';
-import Footer from '../components/footer';
+import Link from 'next/link';
 
 const Layout = props => {
   return (
@@ -9,11 +8,31 @@ const Layout = props => {
         <title>{props.title ? `${props.title} | Next.js AMP Example` : 'Next.js AMP Example'}</title>
       </Head>
 
-      <Header />
+      <div className="header-wrapper">
+        <div className="logo">
+          <Link href="/">
+            <a>Next.js AMP Example</a>
+          </Link>
+        </div>
+        <button on="tap:sidebar.toggle" className="sidebar-trigger">
+          ☰
+        </button>
+      </div>
 
       <div className="content-wrapper">{props.children}</div>
 
-      <Footer />
+      <div className="footer-wrapper">
+        <div className="info">
+          <p>
+            Note: This is a demo website.{' '}
+            <a href="https://reacttricks.com/building-an-amp-website-with-react-and-next">Learn how to build it</a>.
+          </p>
+          <p>
+            Data source: <a href="https://uinames.com">uinames.com</a>, <a href="https://unsplash.com">unsplash.com</a>{' '}
+            &amp; <a href="https://jsonplaceholder.typicode.com">jsonplaceholder.typicode.com</a>
+          </p>
+        </div>
+      </div>
 
       <style jsx global>{`
         html {
@@ -87,6 +106,37 @@ const Layout = props => {
           padding: 20px;
           max-width: 600px;
           margin: 40px auto;
+        }
+        .header-wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          background-image: url(/static/featured.jpg);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center 60px;
+          height: 400px;
+          min-width: 330px;
+        }
+        .logo {
+          padding: 10px 20px;
+        }
+        .logo a {
+          font-weight: 900;
+          color: #111;
+        }
+        .logo a:hover {
+          font-weight: 900;
+          border-bottom: 2px solid #111;
+        }
+        .footer-wrapper {
+          text-align: center;
+          margin: 200px 0 100px;
+          padding: 20px;
+        }
+        .info {
+          color: #777;
+          font-size: 16px;
         }
       `}</style>
     </div>
